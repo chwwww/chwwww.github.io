@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,springcloud,springboot," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本章简单介绍了springboot应用如何在Eureka集群中安全下线。如有错误及不同见解欢迎与我沟通。 问题现象公司所采用的是springboot应用，并且使用Eureka做为注册中心，Ribbon做负载均衡，标准的Netflix体系。现有A服务需要调用B服务，在B服务其中某一台停止时（如kill -9操作），A服务在一段时间内还是会向已停止的服务发送请求，导致服务异常。 问题原因分析了解Eur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot应用在Eureka安全下线">
+<meta property="og:url" content="http://yoursite.com/2020/03/31/202004051/index.html">
+<meta property="og:site_name" content="阿耶的代码小天才">
+<meta property="og:description" content="本章简单介绍了springboot应用如何在Eureka集群中安全下线。如有错误及不同见解欢迎与我沟通。 问题现象公司所采用的是springboot应用，并且使用Eureka做为注册中心，Ribbon做负载均衡，标准的Netflix体系。现有A服务需要调用B服务，在B服务其中某一台停止时（如kill -9操作），A服务在一段时间内还是会向已停止的服务发送请求，导致服务异常。 问题原因分析了解Eur">
+<meta property="article:published_time" content="2020-03-31T03:44:00.887Z">
+<meta property="article:modified_time" content="2020-04-06T06:20:55.238Z">
+<meta property="article:author" content="chw">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="springcloud">
+<meta property="article:tag" content="springboot">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/31/202004051/"/>
+
+
+
+
+
+ <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/b6dbddb6.js","daovoice")
+ daovoice('init', {
+  app_id: "8fe983d2"
+});
+daovoice('update');
+ </script>
+
+
+  <title>springboot应用在Eureka安全下线 | 阿耶的代码小天才</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7bbce701758753be0e4f5a24ad1d1118";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">阿耶的代码小天才</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/31/202004051/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿耶的代码小天才">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">springboot应用在Eureka安全下线</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T11:44:00+08:00">
+                2020-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8E%9F%E5%88%9B/" itemprop="url" rel="index">
+                    <span itemprop="name">原创</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/03/31/202004051/" class="leancloud_visitors" data-flag-title="springboot应用在Eureka安全下线">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本章简单介绍了springboot应用如何在Eureka集群中安全下线。<br>如有错误及不同见解欢迎与我沟通。</p>
+<h2 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h2><p>公司所采用的是springboot应用，并且使用Eureka做为注册中心，Ribbon做负载均衡，标准的Netflix体系。现有A服务需要调用B服务，在B服务其中某一台停<br>止时（如kill -9操作），A服务在一段时间内还是会向已停止的服务发送请求，导致服务异常。</p>
+<h2 id="问题原因分析"><a href="#问题原因分析" class="headerlink" title="问题原因分析"></a>问题原因分析</h2><p>了解Eureka的朋友都知道，Eureka客户端是定时向Eureka服务端发送请求获得服务列表信息的，并且依靠心跳机制维持服务在Eureka服务端的状态。所以当<br>Eureka中某一台服务下线时，需Eureka服务端根据心跳机制剔除该下线的服务（如果Eureka服务端触发了自我保护机制服务还会剔除不掉），然后Eureka客<br>户端才能拉取到最新的服务列表。所以在B服务下线时，Eureka服务端还没将服务剔除又或者是Eureka客户端还未拉取最新的服务列表，请求都是会有可能打<br>到已下线的服务。</p>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>1.切换为其它注册中心。例如zookeeper、consul等。zookeeper的观察者模式机制应该可以达到实时更新服务列表，zookeeper的缺点也很明显，不过本公司的<br>业务量使用zookeeper应该也不会有什么问题。对于consul目前本人还没有什么研究，暂不讨论。由于考虑到换成其它注册中心可能会出现新的问题且需要学习<br>时间，所以没有选择该方法。各注册中心的区别网上很多博客大家可以自己去看一看。<br>2.调整Eureka相关配置，例如：eureka.instance.lease-expiration-duration-in-seconds、eureka.client.initial-instance-info-replication-interval-seconds<br>等配置缩短服务发现、服务剔除等时间。该方法无法根治只能降低错误时间。且这里默认的时间间隔配置不推荐调整，开放时可以这么做。<br>3.开启ribbon的重试机制，开启后如果访问到错误的服务器，会进入重试机制，当请求访问到正确的服务后就可以了。由于底层服务接口<br>没有做到等幂所以重试时会产生重复数据，而且还是会有段时间有概率出错，故没有使用该方法。另外由于springcloud版本不同，ribbon负载均衡策略会有不同，<br>Brixton版本默认为ZoneAvoidanceRule，这导致我们服务挂掉后请求会一直打到挂掉的那台服务而不是时好时坏。<br>4.最后就是我们目前使用的方法，服务停机后主动通知Eureka服务端我要下线了，然后再通知其它服务去拉取最新的服务列表。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="如何去通知Eureka服务端我下线了"><a href="#如何去通知Eureka服务端我下线了" class="headerlink" title="如何去通知Eureka服务端我下线了"></a>如何去通知Eureka服务端我下线了</h3><p>这里我们可以调用com.netflix.discovery.DiscoveryClient的shutdown()方法，以下是shutdown方法源码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Shuts down Eureka Client. Also sends a deregistration request to the</span><br><span class="line"> * eureka server.（关闭Eureka客户。,还将注销请求发送到eureka服务器）</span><br><span class="line"> *&#x2F;</span><br><span class="line">@PreDestroy</span><br><span class="line">@Override</span><br><span class="line">public synchronized void shutdown() &#123;</span><br><span class="line">	if (isShutdown.compareAndSet(false, true)) &#123;</span><br><span class="line">		logger.info(&quot;Shutting down DiscoveryClient ...&quot;);</span><br><span class="line"></span><br><span class="line">		if (statusChangeListener !&#x3D; null &amp;&amp; applicationInfoManager !&#x3D; null) &#123;</span><br><span class="line">			applicationInfoManager.unregisterStatusChangeListener(statusChangeListener.getId());</span><br><span class="line">		&#125;</span><br><span class="line">		&#x2F;&#x2F; 停止所有定时任务，即心跳、缓存刷新等任务停止后将不在向Eureka服务端注册。</span><br><span class="line">		cancelScheduledTasks();</span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F; If APPINFO was registered</span><br><span class="line">		&#x2F;&#x2F; 如果是注册的话，通知下线</span><br><span class="line">		if (applicationInfoManager !&#x3D; null &amp;&amp; clientConfig.shouldRegisterWithEureka()) &#123;</span><br><span class="line">			applicationInfoManager.setInstanceStatus(InstanceStatus.DOWN);</span><br><span class="line">			unregister();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (eurekaTransport !&#x3D; null) &#123;</span><br><span class="line">			eurekaTransport.shutdown();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		heartbeatStalenessMonitor.shutdown();</span><br><span class="line">		registryStalenessMonitor.shutdown();</span><br><span class="line"></span><br><span class="line">		logger.info(&quot;Completed shut down of DiscoveryClient&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外该由@PreDestroy注解标记，所以关闭spring容器时也会走该方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DiscoveryClient discoveryClient &#x3D; DiscoveryManager.getInstance().getDiscoveryClient();</span><br><span class="line">discoveryClient.shutdown();</span><br></pre></td></tr></table></figure>
+<p>可以通过DiscoveryManager获得DiscoveryClient实例再执行shutdown，该方法被标记为过时，当不影响使用。</p>
+<h3 id="如何主动去更新服务列表"><a href="#如何主动去更新服务列表" class="headerlink" title="如何主动去更新服务列表"></a>如何主动去更新服务列表</h3><p>由于服务已在Eureka服务端下线，所以其它客户端重新去拉取即可。Eureka客户端刷新注册表的方法为com.netflix.discovery.DiscoveryClient的refreshRegistry()方法<br>该方法不是public方法，故需要通过反射去强行调用。通常情况该方法都是内部定时调用的，经实践主动调用并不会有什么问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Method method &#x3D; DiscoveryClient.class.getDeclaredMethod(&quot;refreshRegistry&quot;);</span><br><span class="line">method.setAccessible(true);</span><br><span class="line">method.invoke(DiscoveryManager.getInstance().getDiscoveryClient());</span><br></pre></td></tr></table></figure>
+<p>测试时发现这里拉取的服务列表还是有可能存在已经下线的服务，原因是Eureka服务端存在只读缓存。客户端通知下线后缓存没有更新，这里我直接粗暴的将该缓存关闭。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; eureka 服务端配置</span><br><span class="line">eureka.server.use-read-only-response-cache&#x3D;false</span><br></pre></td></tr></table></figure>
+<p>关闭后就能拉到的内容就为最新的数据了。</p>
+<h3 id="如何去通知Eureka上其它客户端我下线了"><a href="#如何去通知Eureka上其它客户端我下线了" class="headerlink" title="如何去通知Eureka上其它客户端我下线了"></a>如何去通知Eureka上其它客户端我下线了</h3><p>可以将该主动更新服务列表的方法对外提供一个接口，停机时在完成shutdown()方法后逐个去调用即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * 远程调用eurekaRefresh接口</span><br><span class="line"> * @param discoveryClient</span><br><span class="line"> *&#x2F;</span><br><span class="line">private void restDoEurekaCacheRefresh(DiscoveryClient discoveryClient)&#123;</span><br><span class="line">	ScheduledExecutorService scheduledExecutorService &#x3D; Executors.newScheduledThreadPool(10);</span><br><span class="line">	String path &#x3D; environment.getProperty(&quot;management.context-path&quot;);</span><br><span class="line">	RestTemplate restTemplate &#x3D; createRestTemplate();</span><br><span class="line">	Applications applications &#x3D; discoveryClient.getApplications();</span><br><span class="line">	List&lt;Application&gt; registeredApplications &#x3D; applications.getRegisteredApplications();</span><br><span class="line">	for (Application application : registeredApplications) &#123;</span><br><span class="line">		List&lt;InstanceInfo&gt; instances &#x3D; application.getInstances();</span><br><span class="line">		for (InstanceInfo instance : instances) &#123;</span><br><span class="line">			if(isNotThisApplication(instance.getInstanceId()))&#123;</span><br><span class="line">				scheduledExecutorService.submit(() -&gt; &#123;</span><br><span class="line">					try &#123;</span><br><span class="line">						JSONObject forObject &#x3D; restTemplate.getForObject(instance.getHomePageUrl() + path +&quot;&#x2F;eurekaRefresh&quot;, JSONObject.class);</span><br><span class="line">						log.info(instance.getInstanceId() + &quot; 调用成功！&quot; + forObject.toString());</span><br><span class="line">					&#125; catch (Exception e) &#123;</span><br><span class="line">						log.error(instance.getInstanceId() + &quot; 调用失败！&quot;);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;);</span><br><span class="line">			&#125;else&#123;</span><br><span class="line">				log.error(&quot;本机跳过！&quot; + instance.getInstanceId());</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	scheduledExecutorService.shutdown();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里更推介mq广播的形式完成通知调用。</p>
+<h3 id="ribbon缓存更新"><a href="#ribbon缓存更新" class="headerlink" title="ribbon缓存更新"></a>ribbon缓存更新</h3><p>完成上述操作后，发现还是会调用到已下线服务。经排查发现是ribbon缓存没有更新导致。<br>ribbon内部存在ServerListUpdater且提供了EurekaNotificationServerListUpdater实现类，可以达到更新ribbon缓存的目的。<br>Eureka客户端执行refreshRegistry刷新注册表调用后会调用onCacheRefreshed发布事件由于Eureka实例使用的是CloudEurekaClient，<br>而CloudEurekaClient会覆盖DiscoveryClient的onCacheRefreshed方法，将事件改为ApplicationListener的事件，故监听ApplicationListener<br>事件使用反射再调用 DiscoveryClient 的 fireEvent（DiscoveryClient的onCacheRefreshed方法主要调用该方法）<br>方法发布 EurekaEventListener监听的RefreshedEvent 事件<br>ribbon 使用EurekaNotificationServerListUpdater后会注册EurekaEventListener监听事件。从而达到eureka缓存刷新同时通知ribbon刷新缓存.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">@Component</span><br><span class="line">public class EurekaCacheRefreshListener implements ApplicationListener&lt;HeartbeatEvent&gt; &#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void onApplicationEvent(HeartbeatEvent event) &#123;</span><br><span class="line">		Object source &#x3D; event.getSource();</span><br><span class="line">		CloudEurekaClient cloudEurekaClient &#x3D; (CloudEurekaClient)source;</span><br><span class="line">		try &#123;</span><br><span class="line">			Method method2 &#x3D; DiscoveryClient.class.getDeclaredMethod(&quot;fireEvent&quot;, EurekaEvent.class);</span><br><span class="line">			method2.setAccessible(true);</span><br><span class="line">			method2.invoke(cloudEurekaClient, new CacheRefreshedEvent());</span><br><span class="line">			log.info(&quot;fireEvent 执行完毕&quot;);</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="停机接口完善"><a href="#停机接口完善" class="headerlink" title="停机接口完善"></a>停机接口完善</h3><p>springboot actuator为我们提供了停机接口（需配置开启）<br>这里我自定义了Endpoint增强自带的停机接口，在执行actuator停机接口前调用了discoveryClient.shutdown()及restDoEurekaCacheRefresh方法。<br>项目运维中停机调用的都是自定义的Endpoint。</p>
+<hr>
+<p>最后如果对源码不是很了解可以在 <a href="http://www.iocoder.cn/" target="_blank" rel="noopener">芋道源码</a> 了解学习</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/springcloud/" rel="tag"># springcloud</a>
+          
+            <a href="/tags/springboot/" rel="tag"># springboot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">chw</p>
+              <p class="site-description motion-element" itemprop="description">立个flag，每周一篇。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chwwww" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.wentz.top/" title="飞黄" target="_blank">飞黄</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题现象"><span class="nav-number">1.</span> <span class="nav-text">问题现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题原因分析"><span class="nav-number">2.</span> <span class="nav-text">问题原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">3.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">4.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何去通知Eureka服务端我下线了"><span class="nav-number">4.1.</span> <span class="nav-text">如何去通知Eureka服务端我下线了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何主动去更新服务列表"><span class="nav-number">4.2.</span> <span class="nav-text">如何主动去更新服务列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何去通知Eureka上其它客户端我下线了"><span class="nav-number">4.3.</span> <span class="nav-text">如何去通知Eureka上其它客户端我下线了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ribbon缓存更新"><span class="nav-number">4.4.</span> <span class="nav-text">ribbon缓存更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停机接口完善"><span class="nav-number">4.5.</span> <span class="nav-text">停机接口完善</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chw</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7bbce701758753be0e4f5a24ad1d1118";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LcO2wPbDER35sUs50RbUfNHh-gzGzoHsz", "GydEPS1PuhcojcGsbXccj8RC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
