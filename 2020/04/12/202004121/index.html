@@ -79,21 +79,19 @@
 
 
 
-<meta name="description" content="本章简单介绍了如何使用java代码配置springcloud gateway的route，已及集成gateway内置的限流组件。 起因因为有需求需要自定义route，完成自定义后route后发现不知道怎么添加内置的RequestRateLimiter限流组件，网上大多都是yml配置的。 解决办法废话不多先直接上代码 @Bean public RouteLocator routes(RouteLoc">
+<meta name="description" content="request body中的内容只允许读取一次，若是多次读取会报错，本章中简单介绍了如何在springcloud gateway中读取body中的内容。 配置方法首先先介绍java代码配置的方法 @Bean public RouteLocator routes(RouteLocatorBuilder builder) {     return builder.routes()">
 <meta property="og:type" content="article">
-<meta property="og:title" content="springcloud gateway自定义route代码配置内置Filter">
-<meta property="og:url" content="http://chwwww.github.io/2020/04/08/202004061/index.html">
+<meta property="og:title" content="springcloud gateway读取请求body中的内容">
+<meta property="og:url" content="http://chwwww.github.io/2020/04/12/202004121/index.html">
 <meta property="og:site_name" content="阿耶的代码小天才">
-<meta property="og:description" content="本章简单介绍了如何使用java代码配置springcloud gateway的route，已及集成gateway内置的限流组件。 起因因为有需求需要自定义route，完成自定义后route后发现不知道怎么添加内置的RequestRateLimiter限流组件，网上大多都是yml配置的。 解决办法废话不多先直接上代码 @Bean public RouteLocator routes(RouteLoc">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/202004061/202004061-pic-1.jpg202004061-pic-1.jpg">
-<meta property="article:published_time" content="2020-04-08T13:05:53.000Z">
-<meta property="article:modified_time" content="2020-04-12T08:57:45.256Z">
+<meta property="og:description" content="request body中的内容只允许读取一次，若是多次读取会报错，本章中简单介绍了如何在springcloud gateway中读取body中的内容。 配置方法首先先介绍java代码配置的方法 @Bean public RouteLocator routes(RouteLocatorBuilder builder) {     return builder.routes()">
+<meta property="article:published_time" content="2020-04-12T08:54:40.000Z">
+<meta property="article:modified_time" content="2020-04-12T09:53:26.368Z">
 <meta property="article:author" content="chw">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="springcloud">
 <meta property="article:tag" content="gateway">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://q8juc1urk.bkt.clouddn.com/202004061/202004061-pic-1.jpg202004061-pic-1.jpg">
 
 
 
@@ -123,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://chwwww.github.io/2020/04/08/202004061/"/>
+  <link rel="canonical" href="http://chwwww.github.io/2020/04/12/202004121/"/>
 
 
 
@@ -137,7 +135,7 @@ daovoice('update');
  </script>
 
 
-  <title>springcloud gateway自定义route代码配置内置Filter | 阿耶的代码小天才</title>
+  <title>springcloud gateway读取请求body中的内容 | 阿耶的代码小天才</title>
   
 
 
@@ -274,7 +272,7 @@ daovoice('update');
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/04/08/202004061/">
+    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/04/12/202004121/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chw">
@@ -291,7 +289,7 @@ daovoice('update');
 
         
         
-          <h1 class="post-title" itemprop="name headline">springcloud gateway自定义route代码配置内置Filter</h1>
+          <h1 class="post-title" itemprop="name headline">springcloud gateway读取请求body中的内容</h1>
         
 
         <div class="post-meta">
@@ -303,8 +301,8 @@ daovoice('update');
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-08T21:05:53+08:00">
-                2020-04-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T16:54:40+08:00">
+                2020-04-12
               </time>
             
 
@@ -343,7 +341,7 @@ daovoice('update');
 
           
           
-             <span id="/2020/04/08/202004061/" class="leancloud_visitors" data-flag-title="springcloud gateway自定义route代码配置内置Filter">
+             <span id="/2020/04/12/202004121/" class="leancloud_visitors" data-flag-title="springcloud gateway读取请求body中的内容">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -379,74 +377,137 @@ daovoice('update');
       
 
       
-        <p>本章简单介绍了如何使用java代码配置springcloud gateway的route，已及集成gateway内置的限流组件。</p>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>因为有需求需要自定义route，完成自定义后route后发现不知道怎么添加内置的RequestRateLimiter限流组件，网上大多都是yml配置的。</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>废话不多先直接上代码</p>
+        <p>request body中的内容只允许读取一次，若是多次读取会报错，本章中简单介绍了如何在springcloud gateway中读取body中的内容。</p>
+<h2 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h2><p>首先先介绍java代码配置的方法</p>
 <pre><code>@Bean
-public RouteLocator routes(RouteLocatorBuilder builder, 
-        RequestRateLimiterGatewayFilterFactory requestRateLimiterGatewayFilterFactory, 
-        HystrixGatewayFilterFactory hystrixGatewayFilterFactory) {
-    HystrixGatewayFilterFactory.Config hystrixConfig = new HystrixGatewayFilterFactory.Config();
-    hystrixConfig.setFallbackUri(&quot;forward:/fallback&quot;);
-    hystrixConfig.setName(&quot;openApiFallback&quot;);
-    RequestRateLimiterGatewayFilterFactory.Config config = new RequestRateLimiterGatewayFilterFactory.Config();
-    config.setRateLimiter(openApiRedisRateLimiter()).setKeyResolver(hostAddrKeyResolver());
+public RouteLocator routes(RouteLocatorBuilder builder) {
     return builder.routes()
             .route(&quot;openApi&quot;, r -&gt; r.path(&quot;/openApi&quot;)
                     .and()
                     .readBody(JSONObject.class, requestBody -&gt; true)
-                    .filters(f -&gt; f.filter(new OpenApiFilter())
-                    .filter(requestRateLimiterGatewayFilterFactory.apply(config))
-                    .filter(hystrixGatewayFilterFactory.apply(hystrixConfig)))
+                    .filters(f -&gt; f.filter(new OpenApiFilter()))
                     .uri(&quot;lb://openApi&quot;))
-                    .build();
-}
+            .build();
+}</code></pre><p>其中调用了readBody方法，这个方法就是读取body的核心方法，为gateway提供的，将body参数转为JSONObject并方入缓存中。<br>之后调用了名为OpenApiFilter的过滤器，这个是自定义的过滤器。我回在OpenApiFilter中用到body。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>在routes中使用了readBody方法后，就可以在缓存中获取到body参数。以下为Filter中的摘要。</p>
+<pre><code>@Override
+public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    ServerHttpRequest request = exchange.getRequest();
+    ServerHttpResponse response = exchange.getResponse();
+    if (!HttpMethod.POST.equals(request.getMethod())) {
+        // 不是POST请求直接返回
+    }
+    JSONObject jsonObject = exchange.getAttribute(&quot;cachedRequestBodyObject&quot;);
+    // 后面可以根据body中的内容进行处理
+    // 省略返回方法
+    return null;
+}</code></pre><h2 id="源码简单解析"><a href="#源码简单解析" class="headerlink" title="源码简单解析"></a>源码简单解析</h2><p>首先看一下核心的readBody方法。</p>
+<pre><code>public &lt;T&gt; BooleanSpec readBody(Class&lt;T&gt; inClass, Predicate&lt;T&gt; predicate) {
+    return asyncPredicate(getBean(ReadBodyPredicateFactory.class)
+            .applyAsync(c -&gt; c.setPredicate(inClass, predicate)));
+}</code></pre><p>可以看出其调用了ReadBodyPredicateFactory类的applyAsync方法。</p>
+<pre><code>@Override
+@SuppressWarnings(&quot;unchecked&quot;)
+public AsyncPredicate&lt;ServerWebExchange&gt; applyAsync(Config config) {
+    return new AsyncPredicate&lt;ServerWebExchange&gt;() {
+        @Override
+        public Publisher&lt;Boolean&gt; apply(ServerWebExchange exchange) {
+            Class inClass = config.getInClass();
+            // 首先从exchange中获得cachedBody缓存中的body,CACHE_REQUEST_BODY_OBJECT_KEY的值即为cachedRequestBodyObject
+            // 所以在自定义Filter的中我们也同样以此方法获取body参数。
+            Object cachedBody = exchange.getAttribute(CACHE_REQUEST_BODY_OBJECT_KEY);
+            Mono&lt;?&gt; modifiedBody;
+            // We can only read the body from the request once, once that happens if
+            // we try to read the body again an exception will be thrown. The below
+            // if/else caches the body object as a request attribute in the
+            // ServerWebExchange so if this filter is run more than once (due to more
+            // than one route using it) we do not try to read the request body
+            // multiple times
+            // 注释翻译结果
+            // 我们只能从请求中读取一次内容，一旦我们尝试再次读取正文，将引发异常。 下面
+            // if / else将主体对象作为请求属性缓存在ServerWebExchange，因此如果此筛选器运行了多次（由于运行了多次）
+            // 而不是使用它的一条路线），我们不会尝试读取请求正文多次
 
-@Bean
-public RedisRateLimiter openApiRedisRateLimiter() {
-    return new RedisRateLimiter(1, 200);
-}
+            if (cachedBody != null) {
+                // 如果缓存中的已经存在则去执行配置中的predicate，本案例中没有配置predicate。
+                try {
+                    boolean test = config.predicate.test(cachedBody);
+                    exchange.getAttributes().put(TEST_ATTRIBUTE, test);
+                    return Mono.just(test);
+                }
+                catch (ClassCastException e) {
+                    if (log.isDebugEnabled()) {
+                        log.debug(&quot;Predicate test failed because class in predicate &quot;
+                                + &quot;does not match the cached body object&quot;, e);
+                    }
+                }
+                return Mono.just(false);
+            }
+            else {
+                // 如果不存在则读取body并方入CACHE_REQUEST_BODY_OBJECT_KEY中，然后执行配置中的predicate.
+                // 读取body的操作在ServerWebExchangeUtils.cacheRequestBodyAndRequest中。
+                return ServerWebExchangeUtils.cacheRequestBodyAndRequest(exchange,
+                        (serverHttpRequest) -&gt; ServerRequest
+                                .create(exchange.mutate().request(serverHttpRequest)
+                                        .build(), messageReaders)
+                                .bodyToMono(inClass)
+                                .doOnNext(objectValue -&gt; exchange.getAttributes().put(
+                                        CACHE_REQUEST_BODY_OBJECT_KEY, objectValue))
+                                .map(objectValue -&gt; config.getPredicate()
+                                        .test(objectValue)));
+            }
+        }
 
-/**
-    * 用户ip限流
-    * @return
-    */
-@Bean
-public KeyResolver hostAddrKeyResolver() {
-    return exchange -&gt; Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
+        @Override
+        public String toString() {
+            return String.format(&quot;ReadBody: %s&quot;, config.getInClass());
+        }
+    };
 }
-</code></pre><p>效果与yml中类似</p>
-<pre><code>spring:
-    cloud:
-        gateway:
-              globalcors:
-                  corsConfigurations:
-                    &apos;[/**]&apos;:
-                      allowedOrigins: &quot;*&quot;
-                      exposedHeaders:
-                      - content-type
-                      allowedHeaders:
-                      - content-type
-                      allowCredentials: true
-                      allowedMethods: &quot;*&quot;
-              routes:
-              - id: main
-                uri: lb://main
-                predicates:
-                - Path=/main/**
-                filters:
-                - RemoveRequestHeader=from
-                - StripPrefix=1
-                - name: CustomRequestRateLimiter
-                  args:
-                    #用于限流的键的解析器的 Bean 对象的名字,使用 SpEL 表达式根据#{@beanName}获取Bean对象
-                    key-resolver: &apos;#{@hostAddrKeyResolver}&apos;
-                    #令牌桶填充速率
-                    redis-rate-limiter.replenishRate: 1
-                    #令牌桶总容量
-                    redis-rate-limiter.burstCapacity: 200</code></pre><p>其中RedisRateLimiter中的参数分别与redis-rate-limiter.replenishRate、redis-rate-limiter.burstCapacity相同。<br>而RequestRateLimiterGatewayFilterFactory与HystrixGatewayFilterFactory都是springcloud gateway内置的filter。还有更多内置Filter请看下图。<br>许多Filter源码看起来并不是很困难，用到可以多了解了解。<br><img src="http://q8juc1urk.bkt.clouddn.com/202004061/202004061-pic-1.jpg202004061-pic-1.jpg" alt="图片名称"></p>
-<hr>
-<p>gateway源码相关也可以在 <a href="http://www.iocoder.cn/categories/Spring-Cloud-Gateway/" target="_blank" rel="noopener">芋道源码</a> 了解学习。多了解了解可以解决很多问题。</p>
+</code></pre><p>ServerWebExchangeUtils.cacheRequestBodyAndRequest方法</p>
+<pre><code>public static &lt;T&gt; Mono&lt;T&gt; cacheRequestBodyAndRequest(ServerWebExchange exchange,
+        Function&lt;ServerHttpRequest, Mono&lt;T&gt;&gt; function) {
+    return cacheRequestBody(exchange, true, function);
+}
+</code></pre><p>继续往下看cacheRequestBody</p>
+<pre><code>private static &lt;T&gt; Mono&lt;T&gt; cacheRequestBody(ServerWebExchange exchange,
+        boolean cacheDecoratedRequest,
+        Function&lt;ServerHttpRequest, Mono&lt;T&gt;&gt; function) {
+    // Join all the DataBuffers so we have a single DataBuffer for the body
+    return DataBufferUtils.join(exchange.getRequest().getBody())
+            .flatMap(dataBuffer -&gt; {
+                if (dataBuffer.readableByteCount() &gt; 0) {
+                    if (log.isTraceEnabled()) {
+                        log.trace(&quot;retaining body in exchange attribute&quot;);
+                    }
+                    exchange.getAttributes().put(CACHED_REQUEST_BODY_ATTR,
+                            dataBuffer);
+                }
+
+                ServerHttpRequestDecorator decorator = new ServerHttpRequestDecorator(
+                        exchange.getRequest()) {
+                    @Override
+                    public Flux&lt;DataBuffer&gt; getBody() {
+                        return Mono.&lt;DataBuffer&gt;fromSupplier(() -&gt; {
+                            if (exchange.getAttributeOrDefault(
+                                    CACHED_REQUEST_BODY_ATTR, null) == null) {
+                                // probably == downstream closed
+                                return null;
+                            }
+                            // TODO: deal with Netty
+                            NettyDataBuffer pdb = (NettyDataBuffer) dataBuffer;
+                            return pdb.factory()
+                                    .wrap(pdb.getNativeBuffer().retainedSlice());
+                        }).flux();
+                    }
+                };
+                if (cacheDecoratedRequest) {
+                    exchange.getAttributes().put(
+                            CACHED_SERVER_HTTP_REQUEST_DECORATOR_ATTR, decorator);
+                }
+                return function.apply(decorator);
+            });
+}</code></pre><p>这里运用了装饰器设计模式将body中读取到的dataBuffer数据包装了下往下传递。这里本人也只是粗略了解。先记录一下。</p>
 
       
     </div>
@@ -481,8 +542,8 @@ public KeyResolver hostAddrKeyResolver() {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/31/202004051/" rel="next" title="springboot应用在Eureka安全下线">
-                <i class="fa fa-chevron-left"></i> springboot应用在Eureka安全下线
+              <a href="/2020/04/08/202004061/" rel="next" title="springcloud gateway自定义route代码配置内置Filter">
+                <i class="fa fa-chevron-left"></i> springcloud gateway自定义route代码配置内置Filter
               </a>
             
           </div>
@@ -490,10 +551,6 @@ public KeyResolver hostAddrKeyResolver() {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/12/202004121/" rel="prev" title="springcloud gateway读取请求body中的内容">
-                springcloud gateway读取请求body中的内容 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -649,7 +706,7 @@ public KeyResolver hostAddrKeyResolver() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#起因"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决办法"><span class="nav-number">2.</span> <span class="nav-text">解决办法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置方法"><span class="nav-number">1.</span> <span class="nav-text">配置方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码简单解析"><span class="nav-number">3.</span> <span class="nav-text">源码简单解析</span></a></li></ol></div>
             
 
           </div>
