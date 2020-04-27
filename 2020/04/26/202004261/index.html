@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="chwwww, java" />
+  <meta name="keywords" content="java - springboot - quartz," />
 
 
 
@@ -79,14 +79,33 @@
 
 
 
-<meta name="description" content="立个flag，每周一篇。水平有限，如有误导，多谢指出。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿耶的代码小天才">
-<meta property="og:url" content="http://chwwww.github.io/categories/%E5%8E%9F%E5%88%9B/index.html">
+<meta name="description" content="很多项目中都会用到定时任务的场景。起初项目中只是简单的使用了spring提供的@Scheduled注解。随着定时任务越来越多，我们需要对定时任务进行可视化管理，于是就单独建立了一个工程，用quartz进行定时任务管理。 问题起因-无法暂停job同事在调试的时候发现通过接口添加的定时任务可以暂停、恢复。而原有的定时任务无法暂停。于是就引起我的好奇心，协助排查。 初步确认原因先说明，由于我们目前使用的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="quartz与springboot整合无法暂停job问题">
+<meta property="og:url" content="http://chwwww.github.io/2020/04/26/202004261/index.html">
 <meta property="og:site_name" content="阿耶的代码小天才">
-<meta property="og:description" content="立个flag，每周一篇。水平有限，如有误导，多谢指出。">
+<meta property="og:description" content="很多项目中都会用到定时任务的场景。起初项目中只是简单的使用了spring提供的@Scheduled注解。随着定时任务越来越多，我们需要对定时任务进行可视化管理，于是就单独建立了一个工程，用quartz进行定时任务管理。 问题起因-无法暂停job同事在调试的时候发现通过接口添加的定时任务可以暂停、恢复。而原有的定时任务无法暂停。于是就引起我的好奇心，协助排查。 初步确认原因先说明，由于我们目前使用的">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-11.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-1.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-2.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-10.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-6.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-14.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-7.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-8.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-9.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-3.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-4.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-5.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-15.png">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-12.jpg">
+<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-13.jpg">
+<meta property="article:published_time" content="2020-04-26T14:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-27T03:20:36.368Z">
 <meta property="article:author" content="chw">
+<meta property="article:tag" content="java - springboot - quartz">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://q8juc1urk.bkt.clouddn.com/0426-11.jpg">
 
 
 
@@ -116,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://chwwww.github.io/categories/原创/"/>
+  <link rel="canonical" href="http://chwwww.github.io/2020/04/26/202004261/"/>
 
 
 
@@ -130,7 +149,7 @@ daovoice('update');
  </script>
 
 
-  <title>分类: 原创 | 阿耶的代码小天才</title>
+  <title>quartz与springboot整合无法暂停job问题 | 阿耶的代码小天才</title>
   
 
 
@@ -159,7 +178,7 @@ daovoice('update');
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,167 +272,214 @@ daovoice('update');
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>原创<small>分类</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/04/26/202004261/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chw">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿耶的代码小天才">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/04/26/202004261/" itemprop="url">
-              
-                <span itemprop="name">quartz与springboot整合无法暂停job问题</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">quartz与springboot整合无法暂停job问题</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-26T22:00:00+08:00"
-              content="2020-04-26" >
-          04-26
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T22:00:00+08:00">
+                2020-04-26
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8E%9F%E5%88%9B/" itemprop="url" rel="index">
+                    <span itemprop="name">原创</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/04/26/202004261/" class="leancloud_visitors" data-flag-title="quartz与springboot整合无法暂停job问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/19/202004191/" itemprop="url">
-              
-                <span itemprop="name">springboot @ComponentScan排除指定类</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-19T15:00:00+08:00"
-              content="2020-04-19" >
-          04-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <p>很多项目中都会用到定时任务的场景。起初项目中只是简单的使用了spring提供的@Scheduled注解。随着定时任务越来越多，我们需要对定时任务进行可视化管理，于是就单独建立了一个工程，用quartz进行定时任务管理。</p>
+<h2 id="问题起因-无法暂停job"><a href="#问题起因-无法暂停job" class="headerlink" title="问题起因-无法暂停job"></a>问题起因-无法暂停job</h2><p>同事在调试的时候发现通过接口添加的定时任务可以暂停、恢复。而原有的定时任务无法暂停。于是就引起我的好奇心，协助排查。</p>
+<h2 id="初步确认原因"><a href="#初步确认原因" class="headerlink" title="初步确认原因"></a>初步确认原因</h2><p>先说明，由于我们目前使用的springboot版本为1.0，所以需要自行整合。到2.0时可以直接引入spring-boot-starter-quartz来实现自动装载，具体可看QuartzAutoConfiguration自动配置类。<br>下面是暂停任务的方法：<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-11.jpg" alt="图片名称"><br>表面上看并没有什么特别问题。根据同事描述的场景我初步推测原有的任务与接口加入的任务应该不是由一个Scheduler管理。<br>下面分别是定时任务job中的Scheduler与接口中的Scheduler，很明显不是一个Scheduler，A-job所属A-Scheduler但是用B-Scheduler去暂停显然不行。<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-1.jpg" alt="图片名称"></p>
+<img src="http://q8juc1urk.bkt.clouddn.com/0426-2.jpg" alt="图片名称">
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>回头看来其实中数据库中也能看出原因：<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-10.jpg" alt="图片名称"><br>SCHED_NAME都不一样。</p>
+<h2 id="为什么会出来两个Scheduler"><a href="#为什么会出来两个Scheduler" class="headerlink" title="为什么会出来两个Scheduler"></a>为什么会出来两个Scheduler</h2><p>既然知道了是因为不同Scheduler导致的，那么为什么会出来两个Scheduler？<br>首先先上配置类：<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-6.jpg" alt="图片名称"><br>厉害的人可能一眼就看出问题，但是我水平有限还是花了比较多的时间才发现问题。<br>我是通过找到org.quartz.Scheduler接口的实现类org.quartz.impl.StdScheduler再找到他的创建工厂类org.quartz.impl.StdSchedulerFactory，因为要与数据库做持久化所以实现类肯定是这个。阅读StdSchedulerFactory，发现有个叫instantiate的初始化的方法，应该就是通过他来进行初始化，所以再方法上打个断点进行调试。<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-14.jpg" alt="图片名称"><br>果然该方法进入两次，通过调试发现两处入口。</p>
+<ul>
+<li><p>SchedulerFactoryBean的afterPropertiesSet方法。</p>
+<img src="http://q8juc1urk.bkt.clouddn.com/0426-7.jpg" alt="图片名称">
+SchedulerFactoryBean实现了InitializingBean接口，InitializingBean接口不陌生，就是为bean做初始化用的。
+<img src="http://q8juc1urk.bkt.clouddn.com/0426-8.jpg" alt="图片名称">
+图中480行就是创建Scheduler的地方。进入方法
+<img src="http://q8juc1urk.bkt.clouddn.com/0426-9.jpg" alt="图片名称">
+可以看出他会再SchedulerRepository中先获取，如果获取不到就创建一个Scheduler。（PS:SchedulerRepository中可以或得到所有的Scheduler）通过调试这里创建了一个叫schedulerFactoryBean的Scheduler。
+</li>
+<li><p>SchedulerFactoryBean的afterPropertiesSet方法。QuartzInitializerListener的contextInitialized方法</p>
+<img src="http://q8juc1urk.bkt.clouddn.com/0426-3.jpg" alt="图片名称">
+QuartzInitializerListener实现了ServletContextListener接口，该接口有两个方法分别contextInitialized与contextDestroyed分别是Servlet容器初始化及销毁时执行。
+查看contextInitialized方法:
+<img src="http://q8juc1urk.bkt.clouddn.com/0426-4.jpg" alt="图片名称">
+<img src="http://q8juc1urk.bkt.clouddn.com/0426-5.jpg" alt="图片名称">
+可以看到里面也创建了一个Scheduler，通过调试知道该Scheduler名字为QuartzScheduler(默认名)
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/12/202004121/" itemprop="url">
-              
-                <span itemprop="name">springcloud gateway读取请求body中的内容</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-12T16:54:40+08:00"
-              content="2020-04-12" >
-          04-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/04/08/202004061/" itemprop="url">
-              
-                <span itemprop="name">springcloud gateway自定义route代码配置内置Filter</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-08T21:05:53+08:00"
-              content="2020-04-08" >
-          04-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/31/202004051/" itemprop="url">
-              
-                <span itemprop="name">springboot应用在Eureka安全下线</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-03-31T11:44:00+08:00"
-              content="2020-03-31" >
-          03-31
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+</li>
+</ul>
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>所以为什么会出来两个Scheduler，是因为配置了两个。<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-15.png" alt="图片名称"><br>这里我选择去掉QuartzInitializerListener。<br>调整后的配置：<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-12.jpg" alt="图片名称"></p>
+<h2 id="与配置中心Apollo结合"><a href="#与配置中心Apollo结合" class="headerlink" title="与配置中心Apollo结合"></a>与配置中心Apollo结合</h2><p>因为线上线下数据库配置不一样。每次部署时都要替换quartz.properties文件非常麻烦。之前尝试过与apollo整合，当发现启动时还是会用到quartz.properties文件，一直找不到原因，通过上文排查也随便解决了这个问题是因为QuartzInitializerListener这里默认用到了。而schedulerFactoryBean说用到配置可以指定。<br>将数据库相关信息方入Apollo,通过@Value注解获取即可。<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-13.jpg" alt="图片名称"></p>
+<hr>
+<p>ps:同事也是网上找篇文章然后照搬下来，网上的文章水平参差不齐，照搬时还是要货比三家要有自己的判断。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java-springboot-quartz/" rel="tag"># java - springboot - quartz</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/19/202004191/" rel="next" title="springboot @ComponentScan排除指定类">
+                <i class="fa fa-chevron-left"></i> springboot @ComponentScan排除指定类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -421,6 +487,10 @@ daovoice('update');
 
 
           
+
+  
+
+
 
         </div>
         
@@ -441,8 +511,17 @@ daovoice('update');
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -526,6 +605,22 @@ daovoice('update');
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题起因-无法暂停job"><span class="nav-number">1.</span> <span class="nav-text">问题起因-无法暂停job</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初步确认原因"><span class="nav-number">2.</span> <span class="nav-text">初步确认原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么会出来两个Scheduler"><span class="nav-number">3.</span> <span class="nav-text">为什么会出来两个Scheduler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题原因"><span class="nav-number">4.</span> <span class="nav-text">问题原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与配置中心Apollo结合"><span class="nav-number">5.</span> <span class="nav-text">与配置中心Apollo结合</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -691,6 +786,10 @@ var _hmt = _hmt || [];
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
