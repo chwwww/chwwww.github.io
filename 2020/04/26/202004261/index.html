@@ -85,27 +85,27 @@
 <meta property="og:url" content="http://chwwww.github.io/2020/04/26/202004261/index.html">
 <meta property="og:site_name" content="阿耶的代码小天才">
 <meta property="og:description" content="很多项目中都会用到定时任务的场景。起初项目中只是简单的使用了spring提供的@Scheduled注解。随着定时任务越来越多，我们需要对定时任务进行可视化管理，于是就单独建立了一个工程，用quartz进行定时任务管理。 问题起因-无法暂停job同事在调试的时候发现通过接口添加的定时任务可以暂停、恢复。而原有的定时任务无法暂停。于是就引起我的好奇心，协助排查。 初步确认原因先说明，由于我们目前使用的">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-11.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-1.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-2.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-10.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-6.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-14.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-7.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-8.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-9.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-3.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-4.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-5.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-15.png">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-12.jpg">
-<meta property="og:image" content="http://q8juc1urk.bkt.clouddn.com/0426-13.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-11.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-1.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-2.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-10.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-6.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-14.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-7.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-8.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-9.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-3.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-4.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-5.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-15.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-12.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-13.jpg">
 <meta property="article:published_time" content="2020-04-26T14:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-27T03:20:36.368Z">
+<meta property="article:modified_time" content="2020-06-03T13:43:20.989Z">
 <meta property="article:author" content="chw">
 <meta property="article:tag" content="java - springboot - quartz">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://q8juc1urk.bkt.clouddn.com/0426-11.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-11.jpg">
 
 
 
@@ -393,32 +393,32 @@ daovoice('update');
       
         <p>很多项目中都会用到定时任务的场景。起初项目中只是简单的使用了spring提供的@Scheduled注解。随着定时任务越来越多，我们需要对定时任务进行可视化管理，于是就单独建立了一个工程，用quartz进行定时任务管理。</p>
 <h2 id="问题起因-无法暂停job"><a href="#问题起因-无法暂停job" class="headerlink" title="问题起因-无法暂停job"></a>问题起因-无法暂停job</h2><p>同事在调试的时候发现通过接口添加的定时任务可以暂停、恢复。而原有的定时任务无法暂停。于是就引起我的好奇心，协助排查。</p>
-<h2 id="初步确认原因"><a href="#初步确认原因" class="headerlink" title="初步确认原因"></a>初步确认原因</h2><p>先说明，由于我们目前使用的springboot版本为1.0，所以需要自行整合。到2.0时可以直接引入spring-boot-starter-quartz来实现自动装载，具体可看QuartzAutoConfiguration自动配置类。<br>下面是暂停任务的方法：<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-11.jpg" alt="图片名称"><br>表面上看并没有什么特别问题。根据同事描述的场景我初步推测原有的任务与接口加入的任务应该不是由一个Scheduler管理。<br>下面分别是定时任务job中的Scheduler与接口中的Scheduler，很明显不是一个Scheduler，A-job所属A-Scheduler但是用B-Scheduler去暂停显然不行。<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-1.jpg" alt="图片名称"></p>
-<img src="http://q8juc1urk.bkt.clouddn.com/0426-2.jpg" alt="图片名称">
+<h2 id="初步确认原因"><a href="#初步确认原因" class="headerlink" title="初步确认原因"></a>初步确认原因</h2><p>先说明，由于我们目前使用的springboot版本为1.0，所以需要自行整合。到2.0时可以直接引入spring-boot-starter-quartz来实现自动装载，具体可看QuartzAutoConfiguration自动配置类。<br>下面是暂停任务的方法：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-11.jpg" alt="图片名称"><br>表面上看并没有什么特别问题。根据同事描述的场景我初步推测原有的任务与接口加入的任务应该不是由一个Scheduler管理。<br>下面分别是定时任务job中的Scheduler与接口中的Scheduler，很明显不是一个Scheduler，A-job所属A-Scheduler但是用B-Scheduler去暂停显然不行。<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-1.jpg" alt="图片名称"></p>
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-2.jpg" alt="图片名称">
 
-<p>回头看来其实中数据库中也能看出原因：<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-10.jpg" alt="图片名称"><br>SCHED_NAME都不一样。</p>
-<h2 id="为什么会出来两个Scheduler"><a href="#为什么会出来两个Scheduler" class="headerlink" title="为什么会出来两个Scheduler"></a>为什么会出来两个Scheduler</h2><p>既然知道了是因为不同Scheduler导致的，那么为什么会出来两个Scheduler？<br>首先先上配置类：<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-6.jpg" alt="图片名称"><br>厉害的人可能一眼就看出问题，但是我水平有限还是花了比较多的时间才发现问题。<br>我是通过找到org.quartz.Scheduler接口的实现类org.quartz.impl.StdScheduler再找到他的创建工厂类org.quartz.impl.StdSchedulerFactory，因为要与数据库做持久化所以实现类肯定是这个。阅读StdSchedulerFactory，发现有个叫instantiate的初始化的方法，应该就是通过他来进行初始化，所以再方法上打个断点进行调试。<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-14.jpg" alt="图片名称"><br>果然该方法进入两次，通过调试发现两处入口。</p>
+<p>回头看来其实中数据库中也能看出原因：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-10.jpg" alt="图片名称"><br>SCHED_NAME都不一样。</p>
+<h2 id="为什么会出来两个Scheduler"><a href="#为什么会出来两个Scheduler" class="headerlink" title="为什么会出来两个Scheduler"></a>为什么会出来两个Scheduler</h2><p>既然知道了是因为不同Scheduler导致的，那么为什么会出来两个Scheduler？<br>首先先上配置类：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-6.jpg" alt="图片名称"><br>厉害的人可能一眼就看出问题，但是我水平有限还是花了比较多的时间才发现问题。<br>我是通过找到org.quartz.Scheduler接口的实现类org.quartz.impl.StdScheduler再找到他的创建工厂类org.quartz.impl.StdSchedulerFactory，因为要与数据库做持久化所以实现类肯定是这个。阅读StdSchedulerFactory，发现有个叫instantiate的初始化的方法，应该就是通过他来进行初始化，所以再方法上打个断点进行调试。<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-14.jpg" alt="图片名称"><br>果然该方法进入两次，通过调试发现两处入口。</p>
 <ul>
 <li><p>SchedulerFactoryBean的afterPropertiesSet方法。</p>
-<img src="http://q8juc1urk.bkt.clouddn.com/0426-7.jpg" alt="图片名称">
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-7.jpg" alt="图片名称">
 SchedulerFactoryBean实现了InitializingBean接口，InitializingBean接口不陌生，就是为bean做初始化用的。
-<img src="http://q8juc1urk.bkt.clouddn.com/0426-8.jpg" alt="图片名称">
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-8.jpg" alt="图片名称">
 图中480行就是创建Scheduler的地方。进入方法
-<img src="http://q8juc1urk.bkt.clouddn.com/0426-9.jpg" alt="图片名称">
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-9.jpg" alt="图片名称">
 可以看出他会再SchedulerRepository中先获取，如果获取不到就创建一个Scheduler。（PS:SchedulerRepository中可以或得到所有的Scheduler）通过调试这里创建了一个叫schedulerFactoryBean的Scheduler。
 </li>
 <li><p>SchedulerFactoryBean的afterPropertiesSet方法。QuartzInitializerListener的contextInitialized方法</p>
-<img src="http://q8juc1urk.bkt.clouddn.com/0426-3.jpg" alt="图片名称">
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-3.jpg" alt="图片名称">
 QuartzInitializerListener实现了ServletContextListener接口，该接口有两个方法分别contextInitialized与contextDestroyed分别是Servlet容器初始化及销毁时执行。
 查看contextInitialized方法:
-<img src="http://q8juc1urk.bkt.clouddn.com/0426-4.jpg" alt="图片名称">
-<img src="http://q8juc1urk.bkt.clouddn.com/0426-5.jpg" alt="图片名称">
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-4.jpg" alt="图片名称">
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-5.jpg" alt="图片名称">
 可以看到里面也创建了一个Scheduler，通过调试知道该Scheduler名字为QuartzScheduler(默认名)
 
 </li>
 </ul>
-<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>所以为什么会出来两个Scheduler，是因为配置了两个。<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-15.png" alt="图片名称"><br>这里我选择去掉QuartzInitializerListener。<br>调整后的配置：<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-12.jpg" alt="图片名称"></p>
-<h2 id="与配置中心Apollo结合"><a href="#与配置中心Apollo结合" class="headerlink" title="与配置中心Apollo结合"></a>与配置中心Apollo结合</h2><p>因为线上线下数据库配置不一样。每次部署时都要替换quartz.properties文件非常麻烦。之前尝试过与apollo整合，当发现启动时还是会用到quartz.properties文件，一直找不到原因，通过上文排查也随便解决了这个问题是因为QuartzInitializerListener这里默认用到了。而schedulerFactoryBean说用到配置可以指定。<br>将数据库相关信息方入Apollo,通过@Value注解获取即可。<br><img src="http://q8juc1urk.bkt.clouddn.com/0426-13.jpg" alt="图片名称"></p>
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>所以为什么会出来两个Scheduler，是因为配置了两个。<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-15.png" alt="图片名称"><br>这里我选择去掉QuartzInitializerListener。<br>调整后的配置：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-12.jpg" alt="图片名称"></p>
+<h2 id="与配置中心Apollo结合"><a href="#与配置中心Apollo结合" class="headerlink" title="与配置中心Apollo结合"></a>与配置中心Apollo结合</h2><p>因为线上线下数据库配置不一样。每次部署时都要替换quartz.properties文件非常麻烦。之前尝试过与apollo整合，当发现启动时还是会用到quartz.properties文件，一直找不到原因，通过上文排查也随便解决了这个问题是因为QuartzInitializerListener这里默认用到了。而schedulerFactoryBean说用到配置可以指定。<br>将数据库相关信息方入Apollo,通过@Value注解获取即可。<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/0426-13.jpg" alt="图片名称"></p>
 <hr>
 <p>ps:同事也是网上找篇文章然后照搬下来，网上的文章水平参差不齐，照搬时还是要货比三家要有自己的判断。</p>
 
@@ -540,7 +540,7 @@ QuartzInitializerListener实现了ServletContextListener接口，该接口有两
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

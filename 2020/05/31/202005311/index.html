@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java - springboot," />
+  <meta name="keywords" content="java," />
 
 
 
@@ -79,23 +79,20 @@
 
 
 
-<meta name="description" content="无法启动问题因为在服务间需要传递token信息，之前都是显示传参，我感觉这样很麻烦且重复不美观。于是为restTemplate添加拦截器统一设置。拦截器内容如下：配置如下： 结果启动时就报错了：因为restTemplate bean导致启动失败了，从异常信息中可以看出(MetricsInterceptorConfiguration.java:100)这个地方add操作报错了。点进去如下：可以看出是">
+<meta name="description" content="问题描述最近公司某app后台服务器经常请求无响应三番五次需要重启，时间间隔没规律白天晚上均有可能。由于日志信息并没有异常信息，且没有足够时间排查，故一直都是临时重启处理。 排查经过这个问题终于到了不得不解决的时候，于是花了很长时间去排查。  先前已经排查过log日志并没有提供有用的异常信息。  通过修改nginx负载均衡配置临时隔离出一台服务器以便排查使用，另一台重启以便业务正常使用。  来到隔离">
 <meta property="og:type" content="article">
-<meta property="og:title" content="restTemplate添加拦截器无法启动问题">
-<meta property="og:url" content="http://chwwww.github.io/2020/04/30/202004301/index.html">
+<meta property="og:title" content="记录一次生产环境服务无响应问题">
+<meta property="og:url" content="http://chwwww.github.io/2020/05/31/202005311/index.html">
 <meta property="og:site_name" content="阿耶的代码小天才">
-<meta property="og:description" content="无法启动问题因为在服务间需要传递token信息，之前都是显示传参，我感觉这样很麻烦且重复不美观。于是为restTemplate添加拦截器统一设置。拦截器内容如下：配置如下： 结果启动时就报错了：因为restTemplate bean导致启动失败了，从异常信息中可以看出(MetricsInterceptorConfiguration.java:100)这个地方add操作报错了。点进去如下：可以看出是">
-<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202004305.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202004303.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202004301.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202004302.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202004304.jpg">
-<meta property="article:published_time" content="2020-04-30T08:30:00.000Z">
-<meta property="article:modified_time" content="2020-06-03T13:43:46.170Z">
+<meta property="og:description" content="问题描述最近公司某app后台服务器经常请求无响应三番五次需要重启，时间间隔没规律白天晚上均有可能。由于日志信息并没有异常信息，且没有足够时间排查，故一直都是临时重启处理。 排查经过这个问题终于到了不得不解决的时候，于是花了很长时间去排查。  先前已经排查过log日志并没有提供有用的异常信息。  通过修改nginx负载均衡配置临时隔离出一台服务器以便排查使用，另一台重启以便业务正常使用。  来到隔离">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/2020053101.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/2020053102.jpg">
+<meta property="article:published_time" content="2020-05-31T14:25:00.000Z">
+<meta property="article:modified_time" content="2020-06-03T13:41:36.464Z">
 <meta property="article:author" content="chw">
-<meta property="article:tag" content="java - springboot">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202004305.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/2020053101.jpg">
 
 
 
@@ -125,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://chwwww.github.io/2020/04/30/202004301/"/>
+  <link rel="canonical" href="http://chwwww.github.io/2020/05/31/202005311/"/>
 
 
 
@@ -139,7 +136,7 @@ daovoice('update');
  </script>
 
 
-  <title>restTemplate添加拦截器无法启动问题 | 阿耶的代码小天才</title>
+  <title>记录一次生产环境服务无响应问题 | 阿耶的代码小天才</title>
   
 
 
@@ -276,7 +273,7 @@ daovoice('update');
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/04/30/202004301/">
+    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/05/31/202005311/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chw">
@@ -293,7 +290,7 @@ daovoice('update');
 
         
         
-          <h1 class="post-title" itemprop="name headline">restTemplate添加拦截器无法启动问题</h1>
+          <h1 class="post-title" itemprop="name headline">记录一次生产环境服务无响应问题</h1>
         
 
         <div class="post-meta">
@@ -305,8 +302,8 @@ daovoice('update');
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T16:30:00+08:00">
-                2020-04-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-31T22:25:00+08:00">
+                2020-05-31
               </time>
             
 
@@ -345,7 +342,7 @@ daovoice('update');
 
           
           
-             <span id="/2020/04/30/202004301/" class="leancloud_visitors" data-flag-title="restTemplate添加拦截器无法启动问题">
+             <span id="/2020/05/31/202005311/" class="leancloud_visitors" data-flag-title="记录一次生产环境服务无响应问题">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -381,13 +378,84 @@ daovoice('update');
       
 
       
-        <h2 id="无法启动问题"><a href="#无法启动问题" class="headerlink" title="无法启动问题"></a>无法启动问题</h2><p>因为在服务间需要传递token信息，之前都是显示传参，我感觉这样很麻烦且重复不美观。于是为restTemplate添加拦截器统一设置。拦截器内容如下：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202004305.jpg" alt="图片名称"><br>配置如下：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202004303.jpg" alt="图片名称"></p>
-<p>结果启动时就报错了：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202004301.jpg" alt="图片名称"><br>因为restTemplate bean导致启动失败了，从异常信息中可以看出(MetricsInterceptorConfiguration.java:100)这个地方add操作报错了。点进去如下：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202004302.jpg" alt="图片名称"><br>可以看出是为restTemplate添加MetricsClientHttpRequestInterceptor拦截器时报错了。<br>回头一看原来是自己添加拦截器设置有问题即：</p>
-<pre><code>// new 了个singletonList进去，而这个singletonList是不支持添加等操作的所以就报错了。
-restTemplate.setInterceptors(Collections.singletonList(new ConnStrInterceptor()));</code></pre><p>restTemplate内部是有一个成员变量interceptors的，只用往里面加就行了。正确设置如下：<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202004304.jpg" alt="图片名称"></p>
-<h2 id="MetricsClientHttpRequestInterceptor提示"><a href="#MetricsClientHttpRequestInterceptor提示" class="headerlink" title="MetricsClientHttpRequestInterceptor提示"></a>MetricsClientHttpRequestInterceptor提示</h2><p>这个拦截器是为系统添加一些请求监控信息的，如果url类型非常多的话有可能会导致内存溢出。具体可以看下面这篇文章：<a href="https://www.jianshu.com/p/331f244074c3" target="_blank" rel="noopener">spring-cloud-netflix-core引发的一次内存溢出分析</a></p>
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近公司某app后台服务器经常请求无响应三番五次需要重启，时间间隔没规律白天晚上均有可能。由于日志信息并没有异常信息，且没有足够时间排查，故一直都是临时重启处理。</p>
+<h2 id="排查经过"><a href="#排查经过" class="headerlink" title="排查经过"></a>排查经过</h2><p>这个问题终于到了不得不解决的时候，于是花了很长时间去排查。</p>
+<ul>
+<li><p>先前已经排查过log日志并没有提供有用的异常信息。</p>
+</li>
+<li><p>通过修改nginx负载均衡配置临时隔离出一台服务器以便排查使用，另一台重启以便业务正常使用。</p>
+</li>
+<li><p>来到隔离的服务器，先是用top指令观察了下，cpu及内存非常正常且十分充裕。</p>
+</li>
+<li><p>通过jcmd查看，应用正常运行。</p>
+</li>
+<li><p>这时只能通过 jstack -l pid &gt;&gt; pid.log 导出线程信息看看服务到底在搞什么鬼。</p>
+</li>
+<li><p>导出来的线程信息文件内容比较多，耐心看发现所有”http-nio-80-exec-***”线程都在parking to wait for某一个锁，搜索了下共193处。这也是服务没有响应的原因，因为所有链接都处于wait状态，从线程信息中可以看出是停在了获取数据库链接的地方。</p>
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/2020053101.jpg" alt="图片名称">
+</li>
+<li><p>再查看了RUNNABLE状态的线程信息发现共有8处都停留再了执行sql语句的地方，查看了项目配置发现并没有配置数据库连接池大小所以根据源码默认的大小为8。刚好对应上面8处RUNNABLE状态线程。也就是说这8处占用了所有的数据库连接并没有归还导致其它请求获取不到数据库连接一直处于等待状态，从而导致请求超时。</p>
+<img src="https://raw.githubusercontent.com/chwwww/blog-image/master/2020053102.jpg" alt="图片名称">
+</li>
+<li><p>服务无响应的诱因已经找到，根据RUNNABLE状态线程的栈信息可以找到具体的业务DAO接口，这里不方便截图。</p>
+</li>
+<li><p>单从语句来看这条sql语句并没有独特的地方仅仅为普普通通的update语句。</p>
+</li>
+<li><p>于是从数据库层面入手查看正在执行的语句及事务。</p>
+<pre><code>SELECT
+    b.sid oracleID,
+    b.username Oracle用户,
+    b.serial #,  
+    spid 操作系统ID,
+    paddr,
+    sql_text 正在执行的SQL,
+    b.machine 计算机名
+FROM
+    v$process a,
+    v$session b,
+    v$sqlarea c
+WHERE
+    a.addr = b.paddr
+AND b.sql_hash_value = c.hash_value
+AND b.username = &apos;userName&apos;;</code></pre><pre><code>SELECT
+    s.sid,
+    s.serial #,  
+    s. EVENT,
+    a.sql_text,
+    a.sql_fulltext,
+    s.username,
+    s. STATUS,
+    s.machine,
+    s.terminal,
+    s.program,
+    a.executions,
+    s.sql_id,
+    p.spid,
+    a.direct_writes
+FROM
+    (
+        SELECT
+            *
+        FROM
+            v$session
+        WHERE
+            STATUS = &apos;ACTIVE&apos;
+    ) s
+LEFT JOIN v$sqlarea a ON s.sql_id = a.sql_id
+INNER JOIN v$process p ON s.paddr = p.addr
+WHERE
+    s.USERNAME = &apos;userName&apos;</code></pre></li>
+<li><p>执行查看执行结果，发现存在delete语句，该语句没有提交事务导致业务中的update语句无法提交。</p>
+</li>
+<li><p>杀掉正在执行的语句试试（ps:这里自己要判断下能不能杀，不要乱杀）</p>
+<pre><code>alter system kill session &apos;sid,serial#&apos;;</code></pre></li>
+<li><p>过一会儿发现又出现了。与同事沟通得知存在定时同步数据的任务在执行，由于环境变迁导致这个任务执行不下去。于是涉及这块数据的业务语句就执行不下去了。刚好前段时间发布一版app引导用户修改与这相关的业务。</p>
+</li>
+<li><p>到这前因后果都清楚了。</p>
+</li>
+</ul>
 <hr>
-<p>结语：singletonList使用还是要注意场景，这里我乱用了。</p>
+<p>结语：排查问题的经过挺有意思，一步一步抽丝剥茧。</p>
 
       
     </div>
@@ -405,7 +473,7 @@ restTemplate.setInterceptors(Collections.singletonList(new ConnStrInterceptor())
       
         <div class="post-tags">
           
-            <a href="/tags/java-springboot/" rel="tag"># java - springboot</a>
+            <a href="/tags/java/" rel="tag"># java</a>
           
         </div>
       
@@ -418,8 +486,8 @@ restTemplate.setInterceptors(Collections.singletonList(new ConnStrInterceptor())
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/26/202004261/" rel="next" title="quartz与springboot整合无法暂停job问题">
-                <i class="fa fa-chevron-left"></i> quartz与springboot整合无法暂停job问题
+              <a href="/2020/04/30/202004301/" rel="next" title="restTemplate添加拦截器无法启动问题">
+                <i class="fa fa-chevron-left"></i> restTemplate添加拦截器无法启动问题
               </a>
             
           </div>
@@ -427,10 +495,6 @@ restTemplate.setInterceptors(Collections.singletonList(new ConnStrInterceptor())
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/31/202005311/" rel="prev" title="记录一次生产环境服务无响应问题">
-                记录一次生产环境服务无响应问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -586,7 +650,7 @@ restTemplate.setInterceptors(Collections.singletonList(new ConnStrInterceptor())
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#无法启动问题"><span class="nav-number">1.</span> <span class="nav-text">无法启动问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MetricsClientHttpRequestInterceptor提示"><span class="nav-number">2.</span> <span class="nav-text">MetricsClientHttpRequestInterceptor提示</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排查经过"><span class="nav-number">2.</span> <span class="nav-text">排查经过</span></a></li></ol></div>
             
 
           </div>
