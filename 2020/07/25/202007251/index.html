@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,springboot," />
+  <meta name="keywords" content="linux,运维," />
 
 
 
@@ -79,18 +79,25 @@
 
 
 
-<meta name="description" content="因为A工程依赖于B工程，B工程为某些通用模块的工程，含有controller、service等通用业务。这时A项目会配置@ComponentScan扫码B工程的包，由于某种原因需要排除某些被@Service标注的类，不将他们加入spring容器中，于是就用上了@ComponentScan的excludeFilters属性。 使用方法excludeFilters属性需要传递@ComponentSca">
+<meta name="description" content="近期规划近期博客更新的脚步停了下来，主要是没什么好的素材。其次最近开始刷leetcode后续会将leetcode的刷题过程记录下来。 本次问题我们项目中有台用来备份数据库sql的服务器。每天会将各各数据库的sql用mysqldump备份下来。因为数据量还是挺大的所以隔一段时间会清除一下久远的备份，这一操作是由corntab执行的。 排查问题首先查看服务器存储空间大小、分布。根据深度查看结果很明显根">
 <meta property="og:type" content="article">
-<meta property="og:title" content="springboot @ComponentScan排除指定类">
-<meta property="og:url" content="http://chwwww.github.io/2020/04/19/202004191/index.html">
+<meta property="og:title" content="linxu磁盘空间释放问题">
+<meta property="og:url" content="http://chwwww.github.io/2020/07/25/202007251/index.html">
 <meta property="og:site_name" content="阿耶的代码小天才">
-<meta property="og:description" content="因为A工程依赖于B工程，B工程为某些通用模块的工程，含有controller、service等通用业务。这时A项目会配置@ComponentScan扫码B工程的包，由于某种原因需要排除某些被@Service标注的类，不将他们加入spring容器中，于是就用上了@ComponentScan的excludeFilters属性。 使用方法excludeFilters属性需要传递@ComponentSca">
-<meta property="article:published_time" content="2020-04-19T07:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-19T08:16:12.223Z">
+<meta property="og:description" content="近期规划近期博客更新的脚步停了下来，主要是没什么好的素材。其次最近开始刷leetcode后续会将leetcode的刷题过程记录下来。 本次问题我们项目中有台用来备份数据库sql的服务器。每天会将各各数据库的sql用mysqldump备份下来。因为数据量还是挺大的所以隔一段时间会清除一下久远的备份，这一操作是由corntab执行的。 排查问题首先查看服务器存储空间大小、分布。根据深度查看结果很明显根">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202007251.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202007252.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202007253.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202007254.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202007255.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202007256.png">
+<meta property="article:published_time" content="2020-07-25T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-07-25T04:23:02.063Z">
 <meta property="article:author" content="chw">
-<meta property="article:tag" content="java">
-<meta property="article:tag" content="springboot">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="运维">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/chwwww/blog-image/master/202007251.png">
 
 
 
@@ -120,7 +127,7 @@
 
 
 
-  <link rel="canonical" href="http://chwwww.github.io/2020/04/19/202004191/"/>
+  <link rel="canonical" href="http://chwwww.github.io/2020/07/25/202007251/"/>
 
 
 
@@ -134,7 +141,7 @@ daovoice('update');
  </script>
 
 
-  <title>springboot @ComponentScan排除指定类 | 阿耶的代码小天才</title>
+  <title>linxu磁盘空间释放问题 | 阿耶的代码小天才</title>
   
 
 
@@ -271,7 +278,7 @@ daovoice('update');
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/04/19/202004191/">
+    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/07/25/202007251/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chw">
@@ -288,7 +295,7 @@ daovoice('update');
 
         
         
-          <h1 class="post-title" itemprop="name headline">springboot @ComponentScan排除指定类</h1>
+          <h1 class="post-title" itemprop="name headline">linxu磁盘空间释放问题</h1>
         
 
         <div class="post-meta">
@@ -300,8 +307,8 @@ daovoice('update');
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T15:00:00+08:00">
-                2020-04-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-25T12:00:00+08:00">
+                2020-07-25
               </time>
             
 
@@ -340,7 +347,7 @@ daovoice('update');
 
           
           
-             <span id="/2020/04/19/202004191/" class="leancloud_visitors" data-flag-title="springboot @ComponentScan排除指定类">
+             <span id="/2020/07/25/202007251/" class="leancloud_visitors" data-flag-title="linxu磁盘空间释放问题">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,34 +383,11 @@ daovoice('update');
       
 
       
-        <p>因为A工程依赖于B工程，B工程为某些通用模块的工程，含有controller、service等通用业务。这时A项目会配置@ComponentScan扫码B工程的包，由于某种原因需要排除某些被@Service标注的类，不将他们加入spring容器中，于是就用上了@ComponentScan的excludeFilters属性。</p>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>excludeFilters属性需要传递@ComponentScan.Filter注解<br>该注解需指定FilterType，FilterType共有下面5种选择：</p>
-<ul>
-<li><p>ANNOTATION<br>  筛选含有某个注解的，例如<br>  @ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,value = {ExcludeComponent.class}))<br>  其中ExcludeComponent是我个人指定的注解可以自己建，只要有该注解标注就会被排除。</p>
-</li>
-<li><p>ASSIGNABLE_TYPE 筛选指定类型的</p>
-</li>
-<li><p>ASPECTJ 筛选匹配给定AspectJ类型模式表达式的</p>
-</li>
-<li><p>REGEX 筛选正则表达式匹配的</p>
-</li>
-<li><p>CUSTOM 自定义筛选</p>
-</li>
-</ul>
-<h2 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h2><p>自定义规则需继承org.springframework.core.type.filter.TypeFilter类，实现match方法即可。例如：</p>
-<pre><code>public class CustomFilter implements TypeFilter {
-
-    private static final String PACKAGE = &quot;.aaa.&quot;;
-
-    @Override
-    public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) {
-        // 可以通过MetadataReader获得各种信息，然后根据自己的需求返回boolean，实例表示包名含有aaa路径的类名将满足筛选条件。
-        return metadataReader.getClassMetadata().getClassName().contains(PACKAGE);
-    }
-
-}
-</code></pre><p>配置<br>@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.CUSTOM, classes = CustomFilter.class))<br>结果就是含有aaa路径的类名将被排除不被加入spring容器中。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>如果工程中存在多个@ComponentScan，需要都进行excludeFilters配置否排除会失效！！！</p>
+        <h2 id="近期规划"><a href="#近期规划" class="headerlink" title="近期规划"></a>近期规划</h2><p>近期博客更新的脚步停了下来，主要是没什么好的素材。其次最近开始刷leetcode后续会将leetcode的刷题过程记录下来。</p>
+<h2 id="本次问题"><a href="#本次问题" class="headerlink" title="本次问题"></a>本次问题</h2><p>我们项目中有台用来备份数据库sql的服务器。每天会将各各数据库的sql用mysqldump备份下来。因为数据量还是挺大的所以隔一段时间会清除一下久远的备份，这一操作是由corntab执行的。</p>
+<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>首先查看服务器存储空间大小、分布。<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202007251.png" alt="图片名称"><br>根据深度查看<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202007252.png" alt="图片名称"><br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202007253.png" alt="图片名称"><br>结果很明显根目录下只占用了10g大小。一般之前清理都是一些日志、备份文件导致磁盘空间不足，但是这次清理后还有20几个G的空间不翼而飞。网上查了下有文章说是因为进程还在导致删除文件的空间没有真正释放。<br><a href="https://www.cnblogs.com/reachos/p/12095639.html" target="_blank" rel="noopener">linux中df和du查看磁盘大小不一致解决方法</a><br>按照文中指示使用lsof命令查看了下。<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202007254.png" alt="图片名称"><br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202007255.png" alt="图片名称"><br>确实存在大量deleted的文件没释放。<br>于是查看了下该进程，该进程为配置中心apollo的进程。apollo服务自启动以来两年多时间没有重启了，导致deleted状态的文件越来越多，可用空间越来越小。于是乎重启了下apollo。<br>再次使用df命令查看了下，20多个G的空间马上回来了。<br><img src="https://raw.githubusercontent.com/chwwww/blog-image/master/202007256.png" alt="图片名称"></p>
+<hr>
+<p>ps:侧面反映linux系统确实稳定，apollo运行了两年都没有重启过，阿里云的服务也稳定一直没有宕机，省心。</p>
 
       
     </div>
@@ -421,9 +405,9 @@ daovoice('update');
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
+            <a href="/tags/linux/" rel="tag"># linux</a>
           
-            <a href="/tags/springboot/" rel="tag"># springboot</a>
+            <a href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag"># 运维</a>
           
         </div>
       
@@ -436,8 +420,8 @@ daovoice('update');
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/12/202004121/" rel="next" title="springcloud gateway读取请求body中的内容">
-                <i class="fa fa-chevron-left"></i> springcloud gateway读取请求body中的内容
+              <a href="/2020/06/26/202006261/" rel="next" title="java Barcode4j生成条形码并添加至pdf打印">
+                <i class="fa fa-chevron-left"></i> java Barcode4j生成条形码并添加至pdf打印
               </a>
             
           </div>
@@ -445,10 +429,6 @@ daovoice('update');
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/26/202004261/" rel="prev" title="quartz与springboot整合无法暂停job问题">
-                quartz与springboot整合无法暂停job问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -604,7 +584,7 @@ daovoice('update');
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义"><span class="nav-number">2.</span> <span class="nav-text">自定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#近期规划"><span class="nav-number">1.</span> <span class="nav-text">近期规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本次问题"><span class="nav-number">2.</span> <span class="nav-text">本次问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排查问题"><span class="nav-number">3.</span> <span class="nav-text">排查问题</span></a></li></ol></div>
             
 
           </div>
