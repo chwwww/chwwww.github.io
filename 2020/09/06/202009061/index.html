@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="题目本题为leetcode探索初级算法中数组章节的一题 判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。 1.数字 1-9 在每一行只能出现一次。2.数字 1-9 在每一列只能出现一次。3.数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。 数独部分空格内已填入了数字，空白格用 ‘.’ 表示。 示例 1: 输入:[  [“5”,”3”,”.”,”">
+<meta name="description" content="题目本题为leetcode探索初级算法中其它章节的一题 给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。 有效字符串需满足：    左括号必须用相同类型的右括号闭合。    左括号必须以正确的顺序闭合。    注意空字符串可被认为是有效字符串。 示例 1:    输入: “()”    输出: true 示例 2:    输入: “()[]{}”">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode算法题-有效的数独">
-<meta property="og:url" content="http://chwwww.github.io/2020/08/17/202008171/index.html">
+<meta property="og:title" content="leetcode算法题-有效的括号">
+<meta property="og:url" content="http://chwwww.github.io/2020/09/06/202009061/index.html">
 <meta property="og:site_name" content="阿耶的代码小天才">
-<meta property="og:description" content="题目本题为leetcode探索初级算法中数组章节的一题 判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。 1.数字 1-9 在每一行只能出现一次。2.数字 1-9 在每一列只能出现一次。3.数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。 数独部分空格内已填入了数字，空白格用 ‘.’ 表示。 示例 1: 输入:[  [“5”,”3”,”.”,”">
-<meta property="article:published_time" content="2020-08-17T13:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-17T13:11:03.234Z">
+<meta property="og:description" content="题目本题为leetcode探索初级算法中其它章节的一题 给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。 有效字符串需满足：    左括号必须用相同类型的右括号闭合。    左括号必须以正确的顺序闭合。    注意空字符串可被认为是有效字符串。 示例 1:    输入: “()”    输出: true 示例 2:    输入: “()[]{}”">
+<meta property="article:published_time" content="2020-09-06T09:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-06T09:30:12.855Z">
 <meta property="article:author" content="chw">
 <meta property="article:tag" content="leetcode">
 <meta property="article:tag" content="算法">
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://chwwww.github.io/2020/08/17/202008171/"/>
+  <link rel="canonical" href="http://chwwww.github.io/2020/09/06/202009061/"/>
 
 
 
@@ -134,7 +134,7 @@ daovoice('update');
  </script>
 
 
-  <title>leetcode算法题-有效的数独 | 阿耶的代码小天才</title>
+  <title>leetcode算法题-有效的括号 | 阿耶的代码小天才</title>
   
 
 
@@ -271,7 +271,7 @@ daovoice('update');
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/08/17/202008171/">
+    <link itemprop="mainEntityOfPage" href="http://chwwww.github.io/2020/09/06/202009061/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chw">
@@ -288,7 +288,7 @@ daovoice('update');
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode算法题-有效的数独</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode算法题-有效的括号</h1>
         
 
         <div class="post-meta">
@@ -300,8 +300,8 @@ daovoice('update');
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-17T21:00:00+08:00">
-                2020-08-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-06T17:00:00+08:00">
+                2020-09-06
               </time>
             
 
@@ -340,7 +340,7 @@ daovoice('update');
 
           
           
-             <span id="/2020/08/17/202008171/" class="leancloud_visitors" data-flag-title="leetcode算法题-有效的数独">
+             <span id="/2020/09/06/202009061/" class="leancloud_visitors" data-flag-title="leetcode算法题-有效的括号">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,19 +376,21 @@ daovoice('update');
       
 
       
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>本题为leetcode探索初级算法中数组章节的一题</p>
-<p>判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。</p>
-<p>1.数字 1-9 在每一行只能出现一次。<br>2.数字 1-9 在每一列只能出现一次。<br>3.数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。</p>
-<p>数独部分空格内已填入了数字，空白格用 ‘.’ 表示。</p>
-<p>示例 1:</p>
-<p>输入:<br>[<br>  [“5”,”3”,”.”,”.”,”7”,”.”,”.”,”.”,”.”],<br>  [“6”,”.”,”.”,”1”,”9”,”5”,”.”,”.”,”.”],<br>  [“.”,”9”,”8”,”.”,”.”,”.”,”.”,”6”,”.”],<br>  [“8”,”.”,”.”,”.”,”6”,”.”,”.”,”.”,”3”],<br>  [“4”,”.”,”.”,”8”,”.”,”3”,”.”,”.”,”1”],<br>  [“7”,”.”,”.”,”.”,”2”,”.”,”.”,”.”,”6”],<br>  [“.”,”6”,”.”,”.”,”.”,”.”,”2”,”8”,”.”],<br>  [“.”,”.”,”.”,”4”,”1”,”9”,”.”,”.”,”5”],<br>  [“.”,”.”,”.”,”.”,”8”,”.”,”.”,”7”,”9”]<br>]<br>输出: true<br>示例 2:</p>
-<p>输入:<br>[<br>  [“8”,”3”,”.”,”.”,”7”,”.”,”.”,”.”,”.”],<br>  [“6”,”.”,”.”,”1”,”9”,”5”,”.”,”.”,”.”],<br>  [“.”,”9”,”8”,”.”,”.”,”.”,”.”,”6”,”.”],<br>  [“8”,”.”,”.”,”.”,”6”,”.”,”.”,”.”,”3”],<br>  [“4”,”.”,”.”,”8”,”.”,”3”,”.”,”.”,”1”],<br>  [“7”,”.”,”.”,”.”,”2”,”.”,”.”,”.”,”6”],<br>  [“.”,”6”,”.”,”.”,”.”,”.”,”2”,”8”,”.”],<br>  [“.”,”.”,”.”,”4”,”1”,”9”,”.”,”.”,”5”],<br>  [“.”,”.”,”.”,”.”,”8”,”.”,”.”,”7”,”9”]<br>]<br>输出: false<br>解释: 除了第一行的第一个数字从 5 改为 8 以外，空格内其他数字均与 示例1 相同。<br>     但由于位于左上角的 3x3 宫内有两个 8 存在, 因此这个数独是无效的。<br>说明:</p>
-<p>1.一个有效的数独（部分已被填充）不一定是可解的。<br>2.只需要根据以上规则，验证已经填入的数字是否有效即可。<br>3.给定数独序列只包含数字 1-9 和字符 ‘.’ 。<br>4.给定数独永远是 9x9 形式的。</p>
-<p>作者：力扣 (LeetCode)<br>链接：<a href="https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/x2f9gg/" target="_blank" rel="noopener">https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/x2f9gg/</a><br>来源：力扣（LeetCode）<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<h2 id="我的解法"><a href="#我的解法" class="headerlink" title="我的解法"></a>我的解法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean isValidSudoku(char[][] board) &#123;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; 9; i++) &#123;</span><br><span class="line">            Set set &#x3D; new HashSet();</span><br><span class="line">            for (int j &#x3D; 0; j &lt; 9; j++) &#123;</span><br><span class="line">                if(board[i][j] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[i][j]))&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                set.add(board[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; 9; i++) &#123;</span><br><span class="line">            Set set &#x3D; new HashSet();</span><br><span class="line">            for (int j &#x3D; 0; j &lt; 9; j++) &#123;</span><br><span class="line">                if(board[j][i] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[j][i]))&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                set.add(board[j][i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return check9(board, 1, 1) &amp;&amp; check9(board, 1, 4) &amp;&amp; check9(board, 1, 7)</span><br><span class="line">            &amp;&amp; check9(board, 4, 1) &amp;&amp; check9(board, 4, 4) &amp;&amp; check9(board, 4, 7)</span><br><span class="line">            &amp;&amp; check9(board, 7, 1) &amp;&amp; check9(board, 7, 4) &amp;&amp; check9(board, 7, 7);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">   private static boolean check9(char[][] board, int center1, int center2) &#123;</span><br><span class="line">         Set set &#x3D; new HashSet();</span><br><span class="line">        if (board[center1 - 1][center2 - 1] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1 - 1][center2 - 1])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(board[center1 - 1][center2 - 1]);</span><br><span class="line"></span><br><span class="line">        if (board[center1 - 1][center2] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1 - 1][center2])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(board[center1 - 1][center2]);</span><br><span class="line"></span><br><span class="line">        if (board[center1 - 1][center2 + 1] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1 - 1][center2 + 1])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(board[center1 - 1][center2 + 1]);</span><br><span class="line"></span><br><span class="line">        if (board[center1][center2 - 1] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1][center2 - 1])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(board[center1][center2 - 1]);</span><br><span class="line"></span><br><span class="line">        if (board[center1][center2] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1][center2])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(board[center1][center2]);</span><br><span class="line"></span><br><span class="line">        if (board[center1][center2 + 1] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1][center2 + 1])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(board[center1][center2 + 1]);</span><br><span class="line"></span><br><span class="line">        if (board[center1 + 1][center2 - 1] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1 + 1][center2 - 1])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(board[center1 + 1][center2 - 1]);</span><br><span class="line"></span><br><span class="line">        if (board[center1 + 1][center2] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1+1][center2])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        set.add(board[center1 + 1][center2]);</span><br><span class="line"></span><br><span class="line">        if (board[center1 + 1][center2 + 1] !&#x3D; &#39;.&#39; &amp;&amp; set.contains(board[center1 + 1][center2 + 1])) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>比较蠢的解法。代码比较臃肿。</p>
-<h2 id="官方解法"><a href="#官方解法" class="headerlink" title="官方解法"></a>官方解法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  public boolean isValidSudoku(char[][] board) &#123;</span><br><span class="line">    &#x2F;&#x2F; init data</span><br><span class="line">    HashMap&lt;Integer, Integer&gt; [] rows &#x3D; new HashMap[9];</span><br><span class="line">    HashMap&lt;Integer, Integer&gt; [] columns &#x3D; new HashMap[9];</span><br><span class="line">    HashMap&lt;Integer, Integer&gt; [] boxes &#x3D; new HashMap[9];</span><br><span class="line">    for (int i &#x3D; 0; i &lt; 9; i++) &#123;</span><br><span class="line">      rows[i] &#x3D; new HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">      columns[i] &#x3D; new HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">      boxes[i] &#x3D; new HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; validate a board</span><br><span class="line">    for (int i &#x3D; 0; i &lt; 9; i++) &#123;</span><br><span class="line">      for (int j &#x3D; 0; j &lt; 9; j++) &#123;</span><br><span class="line">        char num &#x3D; board[i][j];</span><br><span class="line">        if (num !&#x3D; &#39;.&#39;) &#123;</span><br><span class="line">          int n &#x3D; (int)num;</span><br><span class="line">          int box_index &#x3D; (i &#x2F; 3 ) * 3 + j &#x2F; 3;</span><br><span class="line"></span><br><span class="line">          &#x2F;&#x2F; keep the current cell value</span><br><span class="line">          rows[i].put(n, rows[i].getOrDefault(n, 0) + 1);</span><br><span class="line">          columns[j].put(n, columns[j].getOrDefault(n, 0) + 1);</span><br><span class="line">          boxes[box_index].put(n, boxes[box_index].getOrDefault(n, 0) + 1);</span><br><span class="line"></span><br><span class="line">          &#x2F;&#x2F; check if this value has been already seen before</span><br><span class="line">          if (rows[i].get(n) &gt; 1 || columns[j].get(n) &gt; 1 || boxes[box_index].get(n) &gt; 1)</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return true;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>时间复杂度：O(1)O(1)，因为我们只对 81 个单元格进行了一次迭代。<br>空间复杂度：O(1)O(1)。</p>
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>本题为leetcode探索初级算法中其它章节的一题</p>
+<p>给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。</p>
+<p>有效字符串需满足：<br>    左括号必须用相同类型的右括号闭合。<br>    左括号必须以正确的顺序闭合。<br>    注意空字符串可被认为是有效字符串。</p>
+<p>示例 1:<br>    输入: “()”<br>    输出: true</p>
+<p>示例 2:<br>    输入: “()[]{}”<br>    输出: true</p>
+<p>示例 3:<br>    输入: “(]”<br>    输出: false</p>
+<p>示例 4:<br>    输入: “([)]”<br>    输出: false</p>
+<p>示例 5:<br>    输入: “{[]}”<br>    输出: true</p>
+<p>作者：力扣 (LeetCode)<br>链接：<a href="https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnbcaj/" target="_blank" rel="noopener">https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/xnbcaj/</a><br>来源：力扣（LeetCode）<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h2 id="我的解法"><a href="#我的解法" class="headerlink" title="我的解法"></a>我的解法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public static boolean isValid(String s) &#123;</span><br><span class="line">        Stack&lt;Character&gt; stack &#x3D; new Stack&lt;&gt;();</span><br><span class="line">        char[] chars &#x3D; s.toCharArray();</span><br><span class="line">        for (char aChar : chars) &#123;</span><br><span class="line">            if(aChar &#x3D;&#x3D; &#39;(&#39; || aChar &#x3D;&#x3D; &#39;&#123;&#39; || aChar &#x3D;&#x3D; &#39;[&#39;)&#123;</span><br><span class="line">                stack.push(aChar);</span><br><span class="line">            &#125;</span><br><span class="line">            if(aChar &#x3D;&#x3D; &#39;]&#39;)&#123;</span><br><span class="line">                if(stack.isEmpty())&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                Character pop &#x3D; stack.pop();</span><br><span class="line">                if(pop &#x3D;&#x3D; null || !pop.equals(&#39;[&#39;))&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if( aChar &#x3D;&#x3D; &#39;&#125;&#39;)&#123;</span><br><span class="line">                if(stack.isEmpty())&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                Character pop &#x3D; stack.pop();</span><br><span class="line">                if(pop &#x3D;&#x3D; null || !pop.equals(&#39;&#123;&#39;))&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if(aChar &#x3D;&#x3D; &#39;)&#39;)&#123;</span><br><span class="line">                if(stack.isEmpty())&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                Character pop &#x3D; stack.pop();</span><br><span class="line">                if(pop &#x3D;&#x3D; null || !pop.equals(&#39;(&#39;))&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return stack.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这道题想到用栈，问题就不大了。</p>
+<h2 id="官方解法"><a href="#官方解法" class="headerlink" title="官方解法"></a>官方解法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValid(String s) &#123;</span><br><span class="line">        int n &#x3D; s.length();</span><br><span class="line">        if (n % 2 &#x3D;&#x3D; 1) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Map&lt;Character, Character&gt; pairs &#x3D; new HashMap&lt;Character, Character&gt;() &#123;&#123;</span><br><span class="line">            put(&#39;)&#39;, &#39;(&#39;);</span><br><span class="line">            put(&#39;]&#39;, &#39;[&#39;);</span><br><span class="line">            put(&#39;&#125;&#39;, &#39;&#123;&#39;);</span><br><span class="line">        &#125;&#125;;</span><br><span class="line">        Deque&lt;Character&gt; stack &#x3D; new LinkedList&lt;Character&gt;();</span><br><span class="line">        for (int i &#x3D; 0; i &lt; n; i++) &#123;</span><br><span class="line">            char ch &#x3D; s.charAt(i);</span><br><span class="line">            if (pairs.containsKey(ch)) &#123;</span><br><span class="line">                if (stack.isEmpty() || stack.peek() !&#x3D; pairs.get(ch)) &#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                stack.pop();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                stack.push(ch);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return stack.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度：O(n)O(n)，其中 nn 是字符串 ss 的长度。</p>
+<p>空间复杂度：O(n + |\Sigma|)O(n+∣Σ∣)，其中 \SigmaΣ 表示字符集，本题中字符串只包含 66 种括号，|\Sigma| = 6∣Σ∣=6。栈中的字符数量为 O(n)O(n)，而哈希映射使用的空间为 O(|\Sigma|)O(∣Σ∣)，相加即可得到总空间复杂度。</p>
+<p>与官方相比大致思路相同，官方中先判断了长度，题目中前提是“只包括”所以长度为奇数肯定是false。<br>另外用到了map简化了if-else判断。</p>
 
       
     </div>
@@ -421,8 +423,8 @@ daovoice('update');
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/08/02/202008021/" rel="next" title="leetcode算法题-移动零">
-                <i class="fa fa-chevron-left"></i> leetcode算法题-移动零
+              <a href="/2020/08/23/202008231/" rel="next" title="leetcode算法题-删除链表的倒数第N个节点">
+                <i class="fa fa-chevron-left"></i> leetcode算法题-删除链表的倒数第N个节点
               </a>
             
           </div>
@@ -431,8 +433,8 @@ daovoice('update');
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/08/23/202008231/" rel="prev" title="leetcode算法题-删除链表的倒数第N个节点">
-                leetcode算法题-删除链表的倒数第N个节点 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/09/06/202009062/" rel="prev" title="记录一次生产环境因POI导入无响应问题">
+                记录一次生产环境因POI导入无响应问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
